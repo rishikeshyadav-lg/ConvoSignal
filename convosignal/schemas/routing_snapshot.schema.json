@@ -1,0 +1,161 @@
+{
+  "$defs": {
+    "RoutedQuestion": {
+      "additionalProperties": false,
+      "description": "One user message, faithful category assignment and separate routing.",
+      "properties": {
+        "conversation_id": {
+          "title": "Conversation Id",
+          "type": "string"
+        },
+        "trace_id": {
+          "title": "Trace Id",
+          "type": "string"
+        },
+        "turn_id": {
+          "title": "Turn Id",
+          "type": "string"
+        },
+        "message_position": {
+          "title": "Message Position",
+          "type": "integer"
+        },
+        "question": {
+          "title": "Question",
+          "type": "string"
+        },
+        "classification_status": {
+          "enum": [
+            "classified",
+            "set_aside",
+            "unclassified"
+          ],
+          "title": "Classification Status",
+          "type": "string"
+        },
+        "type_name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Type Name"
+        },
+        "routing_decision": {
+          "enum": [
+            "evaluate",
+            "context_only",
+            "exclude"
+          ],
+          "title": "Routing Decision",
+          "type": "string"
+        },
+        "routing_reason": {
+          "enum": [
+            "included_category",
+            "unclassified",
+            "mixed_request",
+            "ambiguous_exclusion",
+            "accepted_standalone_example",
+            "accepted_standalone_context"
+          ],
+          "title": "Routing Reason",
+          "type": "string"
+        },
+        "taxonomy_checksum": {
+          "title": "Taxonomy Checksum",
+          "type": "string"
+        },
+        "filter_policy_checksum": {
+          "title": "Filter Policy Checksum",
+          "type": "string"
+        }
+      },
+      "required": [
+        "conversation_id",
+        "trace_id",
+        "turn_id",
+        "message_position",
+        "question",
+        "classification_status",
+        "type_name",
+        "routing_decision",
+        "routing_reason",
+        "taxonomy_checksum",
+        "filter_policy_checksum"
+      ],
+      "title": "RoutedQuestion",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "One reproducible assignment bound to input, policy and taxonomy.",
+  "properties": {
+    "version": {
+      "const": "1",
+      "default": "1",
+      "title": "Version",
+      "type": "string"
+    },
+    "extraction_version": {
+      "const": "1",
+      "default": "1",
+      "title": "Extraction Version",
+      "type": "string"
+    },
+    "input_checksum": {
+      "title": "Input Checksum",
+      "type": "string"
+    },
+    "taxonomy_checksum": {
+      "title": "Taxonomy Checksum",
+      "type": "string"
+    },
+    "filter_policy_checksum": {
+      "title": "Filter Policy Checksum",
+      "type": "string"
+    },
+    "questions": {
+      "items": {
+        "$ref": "#/$defs/RoutedQuestion"
+      },
+      "title": "Questions",
+      "type": "array"
+    },
+    "eligible_conversation_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Eligible Conversation Ids",
+      "type": "array"
+    },
+    "excluded_only_conversation_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Excluded Only Conversation Ids",
+      "type": "array"
+    },
+    "no_user_conversation_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "No User Conversation Ids",
+      "type": "array"
+    }
+  },
+  "required": [
+    "input_checksum",
+    "taxonomy_checksum",
+    "filter_policy_checksum",
+    "questions",
+    "eligible_conversation_ids",
+    "excluded_only_conversation_ids",
+    "no_user_conversation_ids"
+  ],
+  "title": "RoutingSnapshot",
+  "type": "object"
+}

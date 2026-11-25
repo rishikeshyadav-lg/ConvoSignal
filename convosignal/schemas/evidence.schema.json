@@ -1,0 +1,344 @@
+{
+  "$defs": {
+    "Event": {
+      "additionalProperties": false,
+      "description": "An interpretation affecting scoped requirements at a cited source turn.\n\nRepair means concrete apparent repair, not an assistant assertion.\nAcceptance,\nuse, rejection and repair identify the relevant assistant result explicitly.\nCorrectness events require independent tool evidence. Structural validation\ncannot prove that cited text semantically supports an interpretation.",
+      "properties": {
+        "kind": {
+          "$ref": "#/$defs/EventKind"
+        },
+        "turn_id": {
+          "title": "Turn Id",
+          "type": "string"
+        },
+        "requirement_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Requirement Ids",
+          "type": "array"
+        },
+        "evidence_turn_ids": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Evidence Turn Ids",
+          "type": "array"
+        },
+        "result_turn_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Result Turn Id"
+        }
+      },
+      "required": [
+        "kind",
+        "turn_id",
+        "requirement_ids"
+      ],
+      "title": "Event",
+      "type": "object"
+    },
+    "EventKind": {
+      "description": "Evidence interpretations, never keyword or sentiment matches.",
+      "enum": [
+        "failure",
+        "rejection",
+        "repair",
+        "acceptance",
+        "productive_use",
+        "withdrawal",
+        "fulfillment",
+        "correctness_verified",
+        "correctness_failed"
+      ],
+      "title": "EventKind",
+      "type": "string"
+    },
+    "Goal": {
+      "additionalProperties": false,
+      "description": "A goal with its requirements, chronology and context diagnostics.",
+      "properties": {
+        "goal_id": {
+          "title": "Goal Id",
+          "type": "string"
+        },
+        "requirements": {
+          "items": {
+            "$ref": "#/$defs/Requirement"
+          },
+          "title": "Requirements",
+          "type": "array"
+        },
+        "events": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/Event"
+          },
+          "title": "Events",
+          "type": "array"
+        },
+        "context_complete": {
+          "default": true,
+          "title": "Context Complete",
+          "type": "boolean"
+        },
+        "awaiting_input": {
+          "default": false,
+          "title": "Awaiting Input",
+          "type": "boolean"
+        },
+        "missing_context": {
+          "default": false,
+          "title": "Missing Context",
+          "type": "boolean"
+        },
+        "category": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Category"
+        }
+      },
+      "required": [
+        "goal_id",
+        "requirements"
+      ],
+      "title": "Goal",
+      "type": "object"
+    },
+    "OverallFeedback": {
+      "additionalProperties": false,
+      "description": "Explicit overall feedback or decisive priority, scoped to goal IDs.\n\nOverall acceptance/rejection must identify the delivered assistant results.\nPriority selects one goal explicitly; the engine never infers weights.",
+      "properties": {
+        "kind": {
+          "enum": [
+            "acceptance",
+            "rejection",
+            "priority"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "turn_id": {
+          "title": "Turn Id",
+          "type": "string"
+        },
+        "goal_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Goal Ids",
+          "type": "array"
+        },
+        "result_turn_ids": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Result Turn Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "kind",
+        "turn_id",
+        "goal_ids"
+      ],
+      "title": "OverallFeedback",
+      "type": "object"
+    },
+    "Requirement": {
+      "additionalProperties": false,
+      "description": "A user-requested outcome, including its explicit material constraints.",
+      "properties": {
+        "requirement_id": {
+          "title": "Requirement Id",
+          "type": "string"
+        },
+        "text": {
+          "title": "Text",
+          "type": "string"
+        },
+        "source_turn_id": {
+          "title": "Source Turn Id",
+          "type": "string"
+        },
+        "material": {
+          "default": true,
+          "title": "Material",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "requirement_id",
+        "text",
+        "source_turn_id"
+      ],
+      "title": "Requirement",
+      "type": "object"
+    },
+    "Turn": {
+      "additionalProperties": false,
+      "description": "A source turn; tuple position establishes chronology.",
+      "properties": {
+        "turn_id": {
+          "title": "Turn Id",
+          "type": "string"
+        },
+        "role": {
+          "enum": [
+            "user",
+            "assistant",
+            "tool"
+          ],
+          "title": "Role",
+          "type": "string"
+        },
+        "text": {
+          "title": "Text",
+          "type": "string"
+        },
+        "trace_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Trace Id"
+        },
+        "source_position": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Position"
+        }
+      },
+      "required": [
+        "turn_id",
+        "role",
+        "text"
+      ],
+      "title": "Turn",
+      "type": "object"
+    },
+    "Versions": {
+      "additionalProperties": false,
+      "description": "Identifiers for evidence extraction and deterministic interpretation.",
+      "properties": {
+        "evaluator": {
+          "title": "Evaluator",
+          "type": "string"
+        },
+        "model": {
+          "title": "Model",
+          "type": "string"
+        },
+        "prompt": {
+          "title": "Prompt",
+          "type": "string"
+        },
+        "taxonomy_checksum": {
+          "title": "Taxonomy Checksum",
+          "type": "string"
+        },
+        "rules": {
+          "default": "2",
+          "enum": [
+            "2",
+            "3"
+          ],
+          "title": "Rules",
+          "type": "string"
+        },
+        "schema": {
+          "default": "1",
+          "enum": [
+            "1",
+            "2"
+          ],
+          "title": "Schema",
+          "type": "string"
+        }
+      },
+      "required": [
+        "evaluator",
+        "model",
+        "prompt",
+        "taxonomy_checksum"
+      ],
+      "title": "Versions",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Model evidence input without authoritative model-generated verdicts.",
+  "properties": {
+    "conversation_id": {
+      "title": "Conversation Id",
+      "type": "string"
+    },
+    "turns": {
+      "items": {
+        "$ref": "#/$defs/Turn"
+      },
+      "title": "Turns",
+      "type": "array"
+    },
+    "goals": {
+      "items": {
+        "$ref": "#/$defs/Goal"
+      },
+      "title": "Goals",
+      "type": "array"
+    },
+    "versions": {
+      "$ref": "#/$defs/Versions"
+    },
+    "overall_feedback": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/OverallFeedback"
+      },
+      "title": "Overall Feedback",
+      "type": "array"
+    },
+    "excluded_only": {
+      "default": false,
+      "title": "Excluded Only",
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "conversation_id",
+    "turns",
+    "goals",
+    "versions"
+  ],
+  "title": "EvidenceRecord",
+  "type": "object"
+}

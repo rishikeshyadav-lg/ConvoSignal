@@ -1,0 +1,77 @@
+{
+  "$defs": {
+    "Label": {
+      "description": "The three successful evaluation outcomes.",
+      "enum": [
+        "Satisfied",
+        "Dissatisfied",
+        "Neutral"
+      ],
+      "title": "Label",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "description": "An independent human annotation bound to its source snapshot.",
+  "properties": {
+    "conversation_id": {
+      "minLength": 1,
+      "title": "Conversation Id",
+      "type": "string"
+    },
+    "input_checksum": {
+      "minLength": 1,
+      "title": "Input Checksum",
+      "type": "string"
+    },
+    "reviewer": {
+      "minLength": 1,
+      "title": "Reviewer",
+      "type": "string"
+    },
+    "label": {
+      "$ref": "#/$defs/Label"
+    },
+    "annotation_source": {
+      "default": "human",
+      "title": "Annotation Source",
+      "type": "string"
+    },
+    "goal_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Goal Id"
+    },
+    "reason": {
+      "default": "",
+      "title": "Reason",
+      "type": "string"
+    },
+    "existing_judge_label": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/Label"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    }
+  },
+  "required": [
+    "conversation_id",
+    "input_checksum",
+    "reviewer",
+    "label"
+  ],
+  "title": "Review",
+  "type": "object"
+}

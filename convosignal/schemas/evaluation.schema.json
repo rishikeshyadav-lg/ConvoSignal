@@ -1,0 +1,375 @@
+{
+  "$defs": {
+    "Label": {
+      "description": "The three successful evaluation outcomes.",
+      "enum": [
+        "Satisfied",
+        "Dissatisfied",
+        "Neutral"
+      ],
+      "title": "Label",
+      "type": "string"
+    },
+    "RequirementResult": {
+      "additionalProperties": false,
+      "description": "Derived requirement state at the observed cutoff.",
+      "properties": {
+        "requirement_id": {
+          "title": "Requirement Id",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "open",
+            "fulfilled",
+            "failed",
+            "withdrawn"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "source_turn_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Source Turn Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "requirement_id",
+        "status",
+        "source_turn_ids"
+      ],
+      "title": "RequirementResult",
+      "type": "object"
+    },
+    "Verdict": {
+      "additionalProperties": false,
+      "description": "A derived goal verdict, separate from completion and correctness.",
+      "properties": {
+        "label": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Label"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "reason": {
+          "enum": [
+            "conflicting_evidence",
+            "explicit_rejection",
+            "incomplete_trace",
+            "unresolved_material_failure",
+            "recovery_unconfirmed",
+            "accepted_result",
+            "productive_use",
+            "missing_context",
+            "awaiting_input",
+            "unverifiable",
+            "no_clear_user_response",
+            "withdrawn_goal",
+            "supported_completion",
+            "honest_inability"
+          ],
+          "title": "Reason",
+          "type": "string"
+        },
+        "basis": {
+          "enum": [
+            "direct",
+            "inferred",
+            "none"
+          ],
+          "title": "Basis",
+          "type": "string"
+        },
+        "recovery": {
+          "enum": [
+            "none",
+            "apparent",
+            "confirmed",
+            "unresolved"
+          ],
+          "title": "Recovery",
+          "type": "string"
+        },
+        "source_turn_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Source Turn Ids",
+          "type": "array"
+        },
+        "requirements": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/RequirementResult"
+          },
+          "title": "Requirements",
+          "type": "array"
+        },
+        "outcome": {
+          "default": "unverifiable",
+          "enum": [
+            "fulfilled",
+            "partly_fulfilled",
+            "failed",
+            "unverifiable"
+          ],
+          "title": "Outcome",
+          "type": "string"
+        },
+        "user_response": {
+          "default": "no_clear_evidence",
+          "enum": [
+            "acceptance",
+            "productive_use",
+            "rejection_frustration",
+            "no_clear_evidence"
+          ],
+          "title": "User Response",
+          "type": "string"
+        },
+        "correctness": {
+          "default": "unverified",
+          "enum": [
+            "verified",
+            "unverified",
+            "failed"
+          ],
+          "title": "Correctness",
+          "type": "string"
+        },
+        "unresolved_requirement_ids": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Unresolved Requirement Ids",
+          "type": "array"
+        },
+        "status": {
+          "default": "evaluated",
+          "enum": [
+            "evaluated",
+            "skipped"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "rules_version": {
+          "default": "2",
+          "enum": [
+            "2",
+            "3"
+          ],
+          "title": "Rules Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "label",
+        "reason",
+        "basis",
+        "recovery",
+        "source_turn_ids"
+      ],
+      "title": "Verdict",
+      "type": "object",
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "evaluated"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "label": {
+                "$ref": "#/$defs/Label"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "label": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "Versions": {
+      "additionalProperties": false,
+      "description": "Identifiers for evidence extraction and deterministic interpretation.",
+      "properties": {
+        "evaluator": {
+          "title": "Evaluator",
+          "type": "string"
+        },
+        "model": {
+          "title": "Model",
+          "type": "string"
+        },
+        "prompt": {
+          "title": "Prompt",
+          "type": "string"
+        },
+        "taxonomy_checksum": {
+          "title": "Taxonomy Checksum",
+          "type": "string"
+        },
+        "rules": {
+          "default": "2",
+          "enum": [
+            "2",
+            "3"
+          ],
+          "title": "Rules",
+          "type": "string"
+        },
+        "schema": {
+          "default": "1",
+          "enum": [
+            "1",
+            "2"
+          ],
+          "title": "Schema",
+          "type": "string"
+        }
+      },
+      "required": [
+        "evaluator",
+        "model",
+        "prompt",
+        "taxonomy_checksum"
+      ],
+      "title": "Versions",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Conversation status retaining partial results and diagnostics.",
+  "properties": {
+    "status": {
+      "enum": [
+        "evaluated",
+        "skipped",
+        "error"
+      ],
+      "title": "Status",
+      "type": "string"
+    },
+    "label": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/Label"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "reason": {
+      "enum": [
+        "evaluation_error",
+        "excluded_only",
+        "no_eligible_goal",
+        "consistent_goals",
+        "explicit_priority",
+        "mixed_goals"
+      ],
+      "title": "Reason",
+      "type": "string"
+    },
+    "goals": {
+      "items": {
+        "maxItems": 2,
+        "minItems": 2,
+        "prefixItems": [
+          {
+            "type": "string"
+          },
+          {
+            "$ref": "#/$defs/Verdict"
+          }
+        ],
+        "type": "array"
+      },
+      "title": "Goals",
+      "type": "array"
+    },
+    "errors": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Errors",
+      "type": "array"
+    },
+    "conversation_id": {
+      "default": "",
+      "title": "Conversation Id",
+      "type": "string"
+    },
+    "versions": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/Versions"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "source_turn_ids": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Source Turn Ids",
+      "type": "array"
+    }
+  },
+  "required": [
+    "status",
+    "label",
+    "reason",
+    "goals"
+  ],
+  "title": "Evaluation",
+  "type": "object",
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "evaluated"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "label": {
+            "$ref": "#/$defs/Label"
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "label": {
+            "type": "null"
+          }
+        }
+      }
+    }
+  ]
+}

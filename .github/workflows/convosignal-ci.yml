@@ -1,0 +1,69 @@
+name: ConvoSignal CI
+
+on:
+  pull_request:
+    paths:
+      - "convosignal/**"
+      - ".github/workflows/convosignal-ci.yml"
+  push:
+    branches: [main]
+    paths:
+      - "convosignal/**"
+      - ".github/workflows/convosignal-ci.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ["3.11", "3.12"]
+    defaults:
+      run:
+        working-directory: convosignal
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: "0.12.5"
+          enable-cache: true
+      - run: uv sync --locked --python ${{ matrix.python }}
+      - run: uv run ruff check .
+      - run: uv run ruff format --check .
+      - run: uv run mypy src
+      - run: uv run pytest
+      - run: uv build
+      - name: Inspect distributions for private files
+        run: |
+          python - <<'PY'
+          import pathlib, tarfile, zipfile
+          for path in pathlib.Path("dist").iterdir():
+              if path.suffix == ".whl":
+                  with zipfile.ZipFile(path) as archive:
+                      names = archive.namelist()
+              elif path.name.endswith(".tar.gz"):
+                  with tarfile.open(path) as archive:
+                      names = archive.getnames()
+              else:
+                  continue
+              for name in names:
+                  parts = pathlib.PurePosixPath(name).parts
+                  if "private" in parts or "__pycache__" in parts or ".env" in parts:
+                      raise SystemExit("Private/runtime files entered a distribution")
+              if not any(name.endswith("assets/explorer.html") for name in names):
+                  raise SystemExit("Report templates missing from distribution")
+          PY
+      - name: Test installed wheel outside the checkout
+        run: |
+          uv export --frozen --no-dev --no-emit-project --format requirements-txt > "$RUNNER_TEMP/convosignal-requirements.txt"
+          uv venv --python ${{ matrix.python }} "$RUNNER_TEMP/convosignal-installed"
+          uv pip install --python "$RUNNER_TEMP/convosignal-installed/bin/python" -r "$RUNNER_TEMP/convosignal-requirements.txt"
+          uv pip install --python "$RUNNER_TEMP/convosignal-installed/bin/python" --no-deps dist/*.whl
+          python scripts/verify_distribution.py --python "$RUNNER_TEMP/convosignal-installed/bin/python"

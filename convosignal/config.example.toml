@@ -1,0 +1,18 @@
+tracking_uri = "databricks://YOUR_PROFILE"
+experiment_id = "YOUR_EXPERIMENT_ID"
+profile = "YOUR_PROFILE"
+endpoint = "YOUR_CHAT_ENDPOINT"
+limit = 50
+shape = "interaction"
+question_path = "query"
+answer_path = "answer"
+messages_path = "messages"
+root_span_name = "interaction"
+# Optional explicit filters/bounds; no test or A2A traffic is silently excluded.
+excluded_users = []
+# start_time_ms = 0
+# end_time_ms = 2000000000000
+# session_path = "session_id"
+max_tokens = 8000
+max_input_chars = 200000
+output_dir = "results"

@@ -1,0 +1,146 @@
+[
+  {
+    "trace_id": "satisfied",
+    "timestamp_ms": 0,
+    "messages": [
+      {
+        "role": "user",
+        "content": "Compare this week with last week"
+      },
+      {
+        "role": "assistant",
+        "content": "Synthetic comparison"
+      },
+      {
+        "role": "user",
+        "content": "Thanks, that's what I needed"
+      }
+    ]
+  },
+  {
+    "trace_id": "dissatisfied",
+    "timestamp_ms": 1,
+    "messages": [
+      {
+        "role": "user",
+        "content": "Compare this week with last week"
+      },
+      {
+        "role": "assistant",
+        "content": "Synthetic comparison"
+      },
+      {
+        "role": "user",
+        "content": "Thanks, but the comparison is wrong"
+      }
+    ]
+  },
+  {
+    "trace_id": "neutral",
+    "timestamp_ms": 2,
+    "messages": [
+      {
+        "role": "user",
+        "content": "Compare this week with last week"
+      },
+      {
+        "role": "assistant",
+        "content": "Synthetic comparison"
+      }
+    ]
+  },
+  {
+    "trace_id": "greeting_only",
+    "timestamp_ms": 3,
+    "messages": [
+      {
+        "role": "user",
+        "content": "Hello"
+      }
+    ]
+  },
+  {
+    "trace_id": "capability_only",
+    "timestamp_ms": 4,
+    "messages": [
+      {
+        "role": "user",
+        "content": "What can you do?"
+      }
+    ]
+  },
+  {
+    "trace_id": "mixed_request",
+    "timestamp_ms": 5,
+    "messages": [
+      {
+        "role": "user",
+        "content": "Hi, compare this week with last week"
+      },
+      {
+        "role": "assistant",
+        "content": "Synthetic comparison"
+      }
+    ]
+  },
+  {
+    "trace_id": "unmatched",
+    "timestamp_ms": 6,
+    "messages": [
+      {
+        "role": "user",
+        "content": "Write a summary"
+      },
+      {
+        "role": "assistant",
+        "content": "Synthetic summary"
+      }
+    ]
+  },
+  {
+    "trace_id": "capability_then_task",
+    "timestamp_ms": 7,
+    "messages": [
+      {
+        "role": "user",
+        "content": "What can you do?"
+      },
+      {
+        "role": "assistant",
+        "content": "Supported tasks"
+      },
+      {
+        "role": "user",
+        "content": "Compare this week with last week"
+      },
+      {
+        "role": "assistant",
+        "content": "Synthetic comparison"
+      }
+    ]
+  },
+  {
+    "trace_id": "model_error",
+    "timestamp_ms": 8,
+    "messages": [
+      {
+        "role": "user",
+        "content": "Compare this week with last week"
+      },
+      {
+        "role": "assistant",
+        "content": "Synthetic comparison"
+      }
+    ]
+  },
+  {
+    "trace_id": "no_goal",
+    "timestamp_ms": 9,
+    "messages": [
+      {
+        "role": "user",
+        "content": "Just checking in"
+      }
+    ]
+  }
+]

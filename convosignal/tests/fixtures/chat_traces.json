@@ -1,0 +1,16 @@
+[
+  {"trace_id":"greeting","timestamp_ms":1,"messages":[
+    {"role":"user","content":"Hello"},
+    {"role":"assistant","content":"How can I help?"}
+  ]},
+  {"trace_id":"analysis","timestamp_ms":2,"messages":[
+    {"role":"user","content":"Hi, compare this week with last week"},
+    {"role":"tool","content":"Synthetic comparison evidence"},
+    {"role":"assistant","content":"Here is the comparison"},
+    {"role":"user","content":"Thanks, that's what I needed"}
+  ]},
+  {"trace_id":"unmatched","timestamp_ms":3,"messages":[
+    {"role":"user","content":"Write a summary"},
+    {"role":"assistant","content":"A synthetic summary"}
+  ]}
+]

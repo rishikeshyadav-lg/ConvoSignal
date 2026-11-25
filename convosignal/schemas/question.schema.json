@@ -1,0 +1,35 @@
+{
+  "additionalProperties": false,
+  "description": "A nonblank user message; questions need not end in a question mark.",
+  "properties": {
+    "conversation_id": {
+      "title": "Conversation Id",
+      "type": "string"
+    },
+    "trace_id": {
+      "title": "Trace Id",
+      "type": "string"
+    },
+    "turn_id": {
+      "title": "Turn Id",
+      "type": "string"
+    },
+    "message_position": {
+      "title": "Message Position",
+      "type": "integer"
+    },
+    "question": {
+      "title": "Question",
+      "type": "string"
+    }
+  },
+  "required": [
+    "conversation_id",
+    "trace_id",
+    "turn_id",
+    "message_position",
+    "question"
+  ],
+  "title": "Question",
+  "type": "object"
+}

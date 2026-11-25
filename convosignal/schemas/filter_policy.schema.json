@@ -1,0 +1,67 @@
+{
+  "$defs": {
+    "FilterPolicy": {
+      "additionalProperties": false,
+      "description": "Explicit exclusions and reviewed whole-turn examples by exact type ID.",
+      "properties": {
+        "excluded_type_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Excluded Type Ids",
+          "type": "array"
+        },
+        "standalone_examples": {
+          "additionalProperties": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "title": "Standalone Examples",
+          "type": "object"
+        }
+      },
+      "required": [
+        "excluded_type_ids",
+        "standalone_examples"
+      ],
+      "title": "FilterPolicy",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Policy artifact bound to the reviewed taxonomy and its own checksum.",
+  "properties": {
+    "status": {
+      "const": "accepted",
+      "default": "accepted",
+      "title": "Status",
+      "type": "string"
+    },
+    "version": {
+      "const": "1",
+      "default": "1",
+      "title": "Version",
+      "type": "string"
+    },
+    "taxonomy_checksum": {
+      "title": "Taxonomy Checksum",
+      "type": "string"
+    },
+    "filter_policy": {
+      "$ref": "#/$defs/FilterPolicy"
+    },
+    "filter_policy_checksum": {
+      "title": "Filter Policy Checksum",
+      "type": "string"
+    }
+  },
+  "required": [
+    "taxonomy_checksum",
+    "filter_policy",
+    "filter_policy_checksum"
+  ],
+  "title": "AcceptedPolicy",
+  "type": "object"
+}

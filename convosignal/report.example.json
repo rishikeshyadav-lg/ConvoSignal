@@ -1,0 +1,7 @@
+{
+  "agent_name": "Your agent name",
+  "stage": "production",
+  "stage_basis": "Owner-provided; verify for your dataset",
+  "report_date": "2026-11-24",
+  "source_description": "Your MLflow experiment or frozen offline source"
+}

@@ -1,0 +1,12 @@
+include uv.lock
+recursive-include schemas *.json
+recursive-include docs *.md
+recursive-include tests *.py *.json
+recursive-include src/convosignal/fixtures *.json
+include .env.example
+include config.example.toml
+
+include report.example.json
+recursive-include src/convosignal/assets *.html *.css *.js
+recursive-include scripts *.py
+include CHANGELOG.md

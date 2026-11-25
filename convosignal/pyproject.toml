@@ -1,0 +1,42 @@
+[build-system]
+requires = ["setuptools>=68,<82"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "convosignal"
+version = "0.1.0"
+description = "Evidence-based classification and conversation evaluation."
+readme = "README.md"
+requires-python = ">=3.11,<3.13"
+dependencies = [
+    "databricks-sdk>=0.84,<1",
+    "mlflow-skinny>=3.12,<4",
+    "pydantic>=2.12.5,<3",
+]
+
+[project.scripts]
+convosignal = "convosignal.cli:main"
+
+[dependency-groups]
+dev = ["pytest>=8,<10", "ruff>=0.14,<1", "mypy>=1.18,<2"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 80
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+files = ["src"]
+
+[tool.setuptools.package-data]
+convosignal = ["fixtures/*.json", "assets/*.html", "assets/*.css", "assets/*.js"]

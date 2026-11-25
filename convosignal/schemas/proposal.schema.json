@@ -1,0 +1,196 @@
+{
+  "$defs": {
+    "FilterPolicy": {
+      "additionalProperties": false,
+      "description": "Explicit exclusions and reviewed whole-turn examples by exact type ID.",
+      "properties": {
+        "excluded_type_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Excluded Type Ids",
+          "type": "array"
+        },
+        "standalone_examples": {
+          "additionalProperties": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "title": "Standalone Examples",
+          "type": "object"
+        }
+      },
+      "required": [
+        "excluded_type_ids",
+        "standalone_examples"
+      ],
+      "title": "FilterPolicy",
+      "type": "object"
+    },
+    "QuestionType": {
+      "additionalProperties": false,
+      "description": "An ordered collection of literal markers and requested information.",
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "description": {
+          "title": "Description",
+          "type": "string"
+        },
+        "markers": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Markers",
+          "type": "array"
+        },
+        "asks_for": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Asks For",
+          "type": "array"
+        },
+        "set_aside": {
+          "default": false,
+          "title": "Set Aside",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "name",
+        "description",
+        "markers",
+        "asks_for"
+      ],
+      "title": "QuestionType",
+      "type": "object"
+    },
+    "Sample": {
+      "additionalProperties": false,
+      "description": "Questions only; counts distinguish normalization from traffic volume.",
+      "properties": {
+        "questions": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Questions",
+          "type": "array"
+        },
+        "distinct_total": {
+          "title": "Distinct Total",
+          "type": "integer"
+        },
+        "sample_size": {
+          "title": "Sample Size",
+          "type": "integer"
+        },
+        "truncated_occurrences": {
+          "title": "Truncated Occurrences",
+          "type": "integer"
+        },
+        "cap_bound": {
+          "title": "Cap Bound",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "questions",
+        "distinct_total",
+        "sample_size",
+        "truncated_occurrences",
+        "cap_bound"
+      ],
+      "title": "Sample",
+      "type": "object"
+    },
+    "Taxonomy": {
+      "additionalProperties": false,
+      "description": "Ordered types whose declaration order resolves marker ties.",
+      "properties": {
+        "types": {
+          "items": {
+            "$ref": "#/$defs/QuestionType"
+          },
+          "title": "Types",
+          "type": "array"
+        }
+      },
+      "required": [
+        "types"
+      ],
+      "title": "Taxonomy",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Review artifact; creating it never authorizes classification.",
+  "properties": {
+    "status": {
+      "const": "proposal",
+      "default": "proposal",
+      "title": "Status",
+      "type": "string"
+    },
+    "version": {
+      "const": "1",
+      "default": "1",
+      "title": "Version",
+      "type": "string"
+    },
+    "taxonomy": {
+      "$ref": "#/$defs/Taxonomy"
+    },
+    "filter_policy": {
+      "$ref": "#/$defs/FilterPolicy"
+    },
+    "sample": {
+      "$ref": "#/$defs/Sample"
+    },
+    "source_statistics": {
+      "additionalProperties": {
+        "type": "integer"
+      },
+      "title": "Source Statistics",
+      "type": "object"
+    },
+    "model_identifier": {
+      "title": "Model Identifier",
+      "type": "string"
+    },
+    "taxonomy_checksum": {
+      "title": "Taxonomy Checksum",
+      "type": "string"
+    },
+    "warnings": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Warnings",
+      "type": "array"
+    },
+    "coverage": {
+      "additionalProperties": {
+        "type": "integer"
+      },
+      "title": "Coverage",
+      "type": "object"
+    }
+  },
+  "required": [
+    "taxonomy",
+    "filter_policy",
+    "sample",
+    "source_statistics",
+    "model_identifier",
+    "taxonomy_checksum",
+    "warnings",
+    "coverage"
+  ],
+  "title": "Proposal",
+  "type": "object"
+}

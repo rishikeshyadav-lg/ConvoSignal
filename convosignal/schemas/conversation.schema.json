@@ -1,0 +1,102 @@
+{
+  "$defs": {
+    "Turn": {
+      "additionalProperties": false,
+      "description": "A source turn; tuple position establishes chronology.",
+      "properties": {
+        "turn_id": {
+          "title": "Turn Id",
+          "type": "string"
+        },
+        "role": {
+          "enum": [
+            "user",
+            "assistant",
+            "tool"
+          ],
+          "title": "Role",
+          "type": "string"
+        },
+        "text": {
+          "title": "Text",
+          "type": "string"
+        },
+        "trace_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Trace Id"
+        },
+        "source_position": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Position"
+        }
+      },
+      "required": [
+        "turn_id",
+        "role",
+        "text"
+      ],
+      "title": "Turn",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Source turns retained in order, with an explicit boundary assumption.",
+  "properties": {
+    "conversation_id": {
+      "title": "Conversation Id",
+      "type": "string"
+    },
+    "turns": {
+      "items": {
+        "$ref": "#/$defs/Turn"
+      },
+      "title": "Turns",
+      "type": "array"
+    },
+    "boundary": {
+      "default": "snapshot",
+      "enum": [
+        "trace",
+        "session",
+        "snapshot"
+      ],
+      "title": "Boundary",
+      "type": "string"
+    },
+    "context_complete": {
+      "default": true,
+      "title": "Context Complete",
+      "type": "boolean"
+    },
+    "diagnostics": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Diagnostics",
+      "type": "array"
+    }
+  },
+  "required": [
+    "conversation_id",
+    "turns"
+  ],
+  "title": "Conversation",
+  "type": "object"
+}

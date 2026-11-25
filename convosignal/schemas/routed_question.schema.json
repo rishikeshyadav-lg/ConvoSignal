@@ -1,0 +1,90 @@
+{
+  "additionalProperties": false,
+  "description": "One user message, faithful category assignment and separate routing.",
+  "properties": {
+    "conversation_id": {
+      "title": "Conversation Id",
+      "type": "string"
+    },
+    "trace_id": {
+      "title": "Trace Id",
+      "type": "string"
+    },
+    "turn_id": {
+      "title": "Turn Id",
+      "type": "string"
+    },
+    "message_position": {
+      "title": "Message Position",
+      "type": "integer"
+    },
+    "question": {
+      "title": "Question",
+      "type": "string"
+    },
+    "classification_status": {
+      "enum": [
+        "classified",
+        "set_aside",
+        "unclassified"
+      ],
+      "title": "Classification Status",
+      "type": "string"
+    },
+    "type_name": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Type Name"
+    },
+    "routing_decision": {
+      "enum": [
+        "evaluate",
+        "context_only",
+        "exclude"
+      ],
+      "title": "Routing Decision",
+      "type": "string"
+    },
+    "routing_reason": {
+      "enum": [
+        "included_category",
+        "unclassified",
+        "mixed_request",
+        "ambiguous_exclusion",
+        "accepted_standalone_example",
+        "accepted_standalone_context"
+      ],
+      "title": "Routing Reason",
+      "type": "string"
+    },
+    "taxonomy_checksum": {
+      "title": "Taxonomy Checksum",
+      "type": "string"
+    },
+    "filter_policy_checksum": {
+      "title": "Filter Policy Checksum",
+      "type": "string"
+    }
+  },
+  "required": [
+    "conversation_id",
+    "trace_id",
+    "turn_id",
+    "message_position",
+    "question",
+    "classification_status",
+    "type_name",
+    "routing_decision",
+    "routing_reason",
+    "taxonomy_checksum",
+    "filter_policy_checksum"
+  ],
+  "title": "RoutedQuestion",
+  "type": "object"
+}

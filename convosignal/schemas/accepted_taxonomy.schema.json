@@ -1,0 +1,92 @@
+{
+  "$defs": {
+    "QuestionType": {
+      "additionalProperties": false,
+      "description": "An ordered collection of literal markers and requested information.",
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "description": {
+          "title": "Description",
+          "type": "string"
+        },
+        "markers": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Markers",
+          "type": "array"
+        },
+        "asks_for": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Asks For",
+          "type": "array"
+        },
+        "set_aside": {
+          "default": false,
+          "title": "Set Aside",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "name",
+        "description",
+        "markers",
+        "asks_for"
+      ],
+      "title": "QuestionType",
+      "type": "object"
+    },
+    "Taxonomy": {
+      "additionalProperties": false,
+      "description": "Ordered types whose declaration order resolves marker ties.",
+      "properties": {
+        "types": {
+          "items": {
+            "$ref": "#/$defs/QuestionType"
+          },
+          "title": "Types",
+          "type": "array"
+        }
+      },
+      "required": [
+        "types"
+      ],
+      "title": "Taxonomy",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Accepted taxonomy artifact saved separately from the filtering policy.",
+  "properties": {
+    "status": {
+      "const": "accepted",
+      "default": "accepted",
+      "title": "Status",
+      "type": "string"
+    },
+    "version": {
+      "const": "1",
+      "default": "1",
+      "title": "Version",
+      "type": "string"
+    },
+    "taxonomy": {
+      "$ref": "#/$defs/Taxonomy"
+    },
+    "taxonomy_checksum": {
+      "title": "Taxonomy Checksum",
+      "type": "string"
+    }
+  },
+  "required": [
+    "taxonomy",
+    "taxonomy_checksum"
+  ],
+  "title": "AcceptedTaxonomy",
+  "type": "object"
+}

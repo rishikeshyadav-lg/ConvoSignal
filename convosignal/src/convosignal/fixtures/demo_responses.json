@@ -1,0 +1,211 @@
+{
+  "taxonomy": {
+    "types": [
+      {
+        "name": "greeting",
+        "description": "Standalone greetings/thanks",
+        "markers": [
+          "hello",
+          "hi",
+          "thanks"
+        ],
+        "asks_for": [],
+        "set_aside": true
+      },
+      {
+        "name": "capability",
+        "description": "Agent capabilities",
+        "markers": [
+          "what can you do",
+          "your capabilities",
+          "which kpis"
+        ],
+        "asks_for": [],
+        "set_aside": true
+      },
+      {
+        "name": "comparison",
+        "description": "Compare requested values",
+        "markers": [
+          "compare",
+          "last week",
+          "this week"
+        ],
+        "asks_for": [
+          "period_values"
+        ],
+        "set_aside": false
+      }
+    ]
+  },
+  "satisfied": {
+    "goals": [
+      {
+        "goal_id": "task",
+        "category": "comparison",
+        "requirements": [
+          {
+            "requirement_id": "requested_result",
+            "text": "Compare this week with last week",
+            "source_turn_id": "satisfied:message:0",
+            "material": true
+          }
+        ],
+        "events": [
+          {
+            "kind": "fulfillment",
+            "turn_id": "satisfied:message:1",
+            "requirement_ids": [
+              "requested_result"
+            ]
+          },
+          {
+            "kind": "acceptance",
+            "turn_id": "satisfied:message:2",
+            "requirement_ids": [
+              "requested_result"
+            ],
+            "result_turn_id": "satisfied:message:1"
+          }
+        ]
+      }
+    ]
+  },
+  "dissatisfied": {
+    "goals": [
+      {
+        "goal_id": "task",
+        "category": "comparison",
+        "requirements": [
+          {
+            "requirement_id": "requested_result",
+            "text": "Compare this week with last week",
+            "source_turn_id": "dissatisfied:message:0",
+            "material": true
+          }
+        ],
+        "events": [
+          {
+            "kind": "fulfillment",
+            "turn_id": "dissatisfied:message:1",
+            "requirement_ids": [
+              "requested_result"
+            ]
+          },
+          {
+            "kind": "rejection",
+            "turn_id": "dissatisfied:message:2",
+            "requirement_ids": [
+              "requested_result"
+            ],
+            "result_turn_id": "dissatisfied:message:1"
+          }
+        ]
+      }
+    ]
+  },
+  "neutral": {
+    "goals": [
+      {
+        "goal_id": "task",
+        "category": "comparison",
+        "requirements": [
+          {
+            "requirement_id": "requested_result",
+            "text": "Compare this week with last week",
+            "source_turn_id": "neutral:message:0",
+            "material": true
+          }
+        ],
+        "events": [
+          {
+            "kind": "fulfillment",
+            "turn_id": "neutral:message:1",
+            "requirement_ids": [
+              "requested_result"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "mixed_request": {
+    "goals": [
+      {
+        "goal_id": "task",
+        "category": "comparison",
+        "requirements": [
+          {
+            "requirement_id": "requested_result",
+            "text": "Hi, compare this week with last week",
+            "source_turn_id": "mixed_request:message:0",
+            "material": true
+          }
+        ],
+        "events": [
+          {
+            "kind": "fulfillment",
+            "turn_id": "mixed_request:message:1",
+            "requirement_ids": [
+              "requested_result"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "unmatched": {
+    "goals": [
+      {
+        "goal_id": "task",
+        "category": null,
+        "requirements": [
+          {
+            "requirement_id": "requested_result",
+            "text": "Write a summary",
+            "source_turn_id": "unmatched:message:0",
+            "material": true
+          }
+        ],
+        "events": [
+          {
+            "kind": "fulfillment",
+            "turn_id": "unmatched:message:1",
+            "requirement_ids": [
+              "requested_result"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "capability_then_task": {
+    "goals": [
+      {
+        "goal_id": "task",
+        "category": "comparison",
+        "requirements": [
+          {
+            "requirement_id": "requested_result",
+            "text": "Compare this week with last week",
+            "source_turn_id": "capability_then_task:message:2",
+            "material": true
+          }
+        ],
+        "events": [
+          {
+            "kind": "fulfillment",
+            "turn_id": "capability_then_task:message:3",
+            "requirement_ids": [
+              "requested_result"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "model_error": "invalid model JSON",
+  "no_goal": {
+    "goals": []
+  }
+}

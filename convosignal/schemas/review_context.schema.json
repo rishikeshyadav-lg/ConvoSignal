@@ -1,0 +1,41 @@
+{
+  "additionalProperties": false,
+  "description": "Declared review provenance bound to the evaluated source snapshots.",
+  "properties": {
+    "dataset_role": {
+      "default": "unknown",
+      "enum": [
+        "unknown",
+        "exploratory",
+        "holdout"
+      ],
+      "title": "Dataset Role",
+      "type": "string"
+    },
+    "reviewers_blind": {
+      "default": false,
+      "title": "Reviewers Blind",
+      "type": "boolean"
+    },
+    "annotations_frozen": {
+      "default": false,
+      "title": "Annotations Frozen",
+      "type": "boolean"
+    },
+    "holdout_frozen_before_tuning": {
+      "default": false,
+      "title": "Holdout Frozen Before Tuning",
+      "type": "boolean"
+    },
+    "input_checksums": {
+      "default": [],
+      "items": {
+        "type": "string"
+      },
+      "title": "Input Checksums",
+      "type": "array"
+    }
+  },
+  "title": "ValidationContext",
+  "type": "object"
+}

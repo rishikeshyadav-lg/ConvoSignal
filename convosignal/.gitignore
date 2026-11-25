@@ -1,0 +1,6 @@
+# Runtime conversations/artifacts belong locally, never in committed fixtures.
+/results/
+/demo-results/
+/runs/
+/private/
+/classified/

@@ -1,0 +1,280 @@
+{
+  "$defs": {
+    "Event": {
+      "additionalProperties": false,
+      "description": "An interpretation affecting scoped requirements at a cited source turn.\n\nRepair means concrete apparent repair, not an assistant assertion.\nAcceptance,\nuse, rejection and repair identify the relevant assistant result explicitly.\nCorrectness events require independent tool evidence. Structural validation\ncannot prove that cited text semantically supports an interpretation.",
+      "properties": {
+        "kind": {
+          "$ref": "#/$defs/EventKind"
+        },
+        "turn_id": {
+          "title": "Turn Id",
+          "type": "string"
+        },
+        "requirement_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Requirement Ids",
+          "type": "array"
+        },
+        "evidence_turn_ids": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Evidence Turn Ids",
+          "type": "array"
+        },
+        "result_turn_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Result Turn Id"
+        }
+      },
+      "required": [
+        "kind",
+        "turn_id",
+        "requirement_ids"
+      ],
+      "title": "Event",
+      "type": "object"
+    },
+    "EventKind": {
+      "description": "Evidence interpretations, never keyword or sentiment matches.",
+      "enum": [
+        "failure",
+        "rejection",
+        "repair",
+        "acceptance",
+        "productive_use",
+        "withdrawal",
+        "fulfillment",
+        "correctness_verified",
+        "correctness_failed"
+      ],
+      "title": "EventKind",
+      "type": "string"
+    },
+    "Goal": {
+      "additionalProperties": false,
+      "description": "Separate observable deliverable completion from factual verification.",
+      "properties": {
+        "goal_id": {
+          "title": "Goal Id",
+          "type": "string"
+        },
+        "requirements": {
+          "items": {
+            "$ref": "#/$defs/Requirement"
+          },
+          "title": "Requirements",
+          "type": "array"
+        },
+        "events": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/Event"
+          },
+          "title": "Events",
+          "type": "array"
+        },
+        "context_complete": {
+          "default": true,
+          "title": "Context Complete",
+          "type": "boolean"
+        },
+        "awaiting_input": {
+          "default": false,
+          "title": "Awaiting Input",
+          "type": "boolean"
+        },
+        "missing_context": {
+          "default": false,
+          "title": "Missing Context",
+          "type": "boolean"
+        },
+        "category": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Category"
+        },
+        "deliverable_requirement_ids": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Deliverable Requirement Ids",
+          "type": "array"
+        },
+        "unavailable": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/Limitation"
+          },
+          "title": "Unavailable",
+          "type": "array"
+        },
+        "context_evidence_turn_ids": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Context Evidence Turn Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "goal_id",
+        "requirements"
+      ],
+      "title": "Goal",
+      "type": "object"
+    },
+    "Limitation": {
+      "additionalProperties": false,
+      "description": "A cited external limitation, not an assertion of agent failure.",
+      "properties": {
+        "requirement_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Requirement Ids",
+          "type": "array"
+        },
+        "evidence_turn_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Evidence Turn Ids",
+          "type": "array"
+        },
+        "result_turn_id": {
+          "title": "Result Turn Id",
+          "type": "string"
+        },
+        "explanation": {
+          "title": "Explanation",
+          "type": "string"
+        }
+      },
+      "required": [
+        "requirement_ids",
+        "evidence_turn_ids",
+        "result_turn_id",
+        "explanation"
+      ],
+      "title": "Limitation",
+      "type": "object"
+    },
+    "OverallFeedback": {
+      "additionalProperties": false,
+      "description": "Explicit overall feedback or decisive priority, scoped to goal IDs.\n\nOverall acceptance/rejection must identify the delivered assistant results.\nPriority selects one goal explicitly; the engine never infers weights.",
+      "properties": {
+        "kind": {
+          "enum": [
+            "acceptance",
+            "rejection",
+            "priority"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "turn_id": {
+          "title": "Turn Id",
+          "type": "string"
+        },
+        "goal_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Goal Ids",
+          "type": "array"
+        },
+        "result_turn_ids": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Result Turn Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "kind",
+        "turn_id",
+        "goal_ids"
+      ],
+      "title": "OverallFeedback",
+      "type": "object"
+    },
+    "Requirement": {
+      "additionalProperties": false,
+      "description": "A user-requested outcome, including its explicit material constraints.",
+      "properties": {
+        "requirement_id": {
+          "title": "Requirement Id",
+          "type": "string"
+        },
+        "text": {
+          "title": "Text",
+          "type": "string"
+        },
+        "source_turn_id": {
+          "title": "Source Turn Id",
+          "type": "string"
+        },
+        "material": {
+          "default": true,
+          "title": "Material",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "requirement_id",
+        "text",
+        "source_turn_id"
+      ],
+      "title": "Requirement",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Version 3 observations without source replacement or predicted labels.",
+  "properties": {
+    "goals": {
+      "items": {
+        "$ref": "#/$defs/Goal"
+      },
+      "title": "Goals",
+      "type": "array"
+    },
+    "overall_feedback": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/OverallFeedback"
+      },
+      "title": "Overall Feedback",
+      "type": "array"
+    }
+  },
+  "required": [
+    "goals"
+  ],
+  "title": "ModelEvidence",
+  "type": "object"
+}
