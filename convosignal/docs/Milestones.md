@@ -5,11 +5,18 @@
 - [x] Close the unmerged campaign-agent PR #53 after owner scope correction.
 - [x] Prepare the standalone repository with the package, specs, tests, and CI.
 - [x] Verify the standalone package for publication to ConvoSignal main.
+- [x] Publish to ConvoSignal main and fast-forward the existing Desktop checkout.
 
 Both Python 3.11 and 3.12 pass all 200 offline tests. Ruff lint/format, strict
 mypy, source/wheel builds, and the installed-wheel demo/replay/report check pass.
 The installed package exports HTML, DOCX, CSV, and JSON outside the checkout.
 CI repeats these checks on pushes to the standalone repository.
+
+Publication commit: `1182219`. The first standalone Actions run could not start
+either job: GitHub reported failed recent account payments or a spending limit
+that needs increasing. This is an account-level block; remote checks have not run
+in this repository. Local checks above passed. Restore Actions availability and
+rerun the workflow to complete remote verification.
 
 Private snapshots and generated reports are excluded. Existing independent human
 accuracy validation remains pending.
